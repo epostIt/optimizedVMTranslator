@@ -1,0 +1,42 @@
+// FILE: Main.jack
+// CS-4100 Optimization Program
+// Standard Jack Version
+// William L. Bahn
+// Spring 2020
+
+// This code is NOT to be changed!
+// This code is intentionally left uncommented.
+
+class Main
+{
+	function void main()
+	{
+		var Array flag;
+		var Map map;
+		var String msg;
+		
+		let flag = 16383;
+		let flag[0] = 2424;
+		
+		do Main.message("****** Run commencing ******");
+		
+		let map = Map.new(4, 7, 8, 5);
+		do map.draw();
+		do map.dispose();
+		
+		do Main.message("*** Spring 2020 complete ***");
+		
+		let flag[0] = 4242;
+
+		return;
+	}
+	
+	function void message(String s)
+	{
+		do Output.moveCursor(21, (64 - s.length())/2);
+		do Output.printString(s);
+		do s.dispose();
+		
+		return;
+	}
+}

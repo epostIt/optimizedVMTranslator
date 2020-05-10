@@ -1,0 +1,92 @@
+// FILE: Map.jack
+// CS-4100 Optimization Program
+// Standard Jack Version
+// William L. Bahn
+// Spring 2020
+
+// This code is NOT to be changed!
+// This code is intentionally left uncommented.
+
+class Map
+{
+	static int rows, cols, cellWidth, cellHeight;
+	static int minRadius;
+	
+	field Array mapData;
+	
+	constructor Map new(int mapRows, int mapCols, int width, int height)
+	{
+		var int row, col;
+		
+		let rows = mapRows;
+		let cols = mapCols;
+		let cellWidth = width;
+		let cellHeight = height;
+		let minRadius = 3;
+		
+		let mapData = Memory.alloc(rows * cols);
+		
+		let row = 0;
+		while (row < rows)
+		{
+			let col = 0;
+			while (col < cols)
+			{
+				let mapData[(row*cols) + col] = Cell.new(row, col);
+				let col = col + 1;
+			}
+			let row = row + 1;
+		}
+		
+		return this;
+	}
+	
+	method void dispose()
+	{
+		var int row, col;
+		var Cell thisCell;
+
+		let row = 0;
+		while (row < rows)
+		{
+			let col = 0;
+			while (col < cols)
+			{
+				let thisCell = mapData[col + (row*cols)];
+				if (~(thisCell = 0))
+				{
+					do thisCell.dispose();
+				}
+				let col = col + 1;
+			}
+			let row = row + 1;
+		}
+		
+		return;
+		
+	}
+	
+	method void draw()
+	{
+		var int row, col;
+		var Cell thisCell;
+
+		do Screen.clearScreen();
+		
+		let row = 0;
+		while (row < rows)
+		{
+			let col = 0;
+			while (col < cols)
+			{
+				let thisCell = mapData[row*cols + col];
+				do thisCell.draw(cellWidth, cellHeight, minRadius);
+				do Output.moveCursor(3*row, 57 + col);
+				do Output.printString("$");
+				let col = col + 1;
+			}
+			let row = row + 1;
+		}
+		return;
+	}
+}

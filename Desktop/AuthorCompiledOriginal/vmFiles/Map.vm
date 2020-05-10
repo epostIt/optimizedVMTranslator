@@ -1,0 +1,182 @@
+function Map.new 2
+push constant 1
+call Memory.alloc 1
+pop pointer 0
+push argument 0
+pop static 0
+push argument 1
+pop static 1
+push argument 2
+pop static 2
+push argument 3
+pop static 3
+push constant 3
+pop static 4
+push static 0
+push static 1
+call Math.multiply 2
+call Memory.alloc 1
+pop this 0
+push constant 0
+pop local 0
+label WHILE_EXP0
+push local 0
+push static 0
+lt
+not
+if-goto WHILE_END0
+push constant 0
+pop local 1
+label WHILE_EXP1
+push local 1
+push static 1
+lt
+not
+if-goto WHILE_END1
+push local 0
+push static 1
+call Math.multiply 2
+push local 1
+add
+push this 0
+add
+push local 0
+push local 1
+call Cell.new 2
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push local 1
+push constant 1
+add
+pop local 1
+goto WHILE_EXP1
+label WHILE_END1
+push local 0
+push constant 1
+add
+pop local 0
+goto WHILE_EXP0
+label WHILE_END0
+push pointer 0
+return
+function Map.dispose 3
+push argument 0
+pop pointer 0
+push constant 0
+pop local 0
+label WHILE_EXP0
+push local 0
+push static 0
+lt
+not
+if-goto WHILE_END0
+push constant 0
+pop local 1
+label WHILE_EXP1
+push local 1
+push static 1
+lt
+not
+if-goto WHILE_END1
+push local 1
+push local 0
+push static 1
+call Math.multiply 2
+add
+push this 0
+add
+pop pointer 1
+push that 0
+pop local 2
+push local 2
+push constant 0
+eq
+not
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push local 2
+call Cell.dispose 1
+pop temp 0
+label IF_FALSE0
+push local 1
+push constant 1
+add
+pop local 1
+goto WHILE_EXP1
+label WHILE_END1
+push local 0
+push constant 1
+add
+pop local 0
+goto WHILE_EXP0
+label WHILE_END0
+push constant 0
+return
+function Map.draw 3
+push argument 0
+pop pointer 0
+call Screen.clearScreen 0
+pop temp 0
+push constant 0
+pop local 0
+label WHILE_EXP0
+push local 0
+push static 0
+lt
+not
+if-goto WHILE_END0
+push constant 0
+pop local 1
+label WHILE_EXP1
+push local 1
+push static 1
+lt
+not
+if-goto WHILE_END1
+push local 0
+push static 1
+call Math.multiply 2
+push local 1
+add
+push this 0
+add
+pop pointer 1
+push that 0
+pop local 2
+push local 2
+push static 2
+push static 3
+push static 4
+call Cell.draw 4
+pop temp 0
+push constant 3
+push local 0
+call Math.multiply 2
+push constant 57
+push local 1
+add
+call Output.moveCursor 2
+pop temp 0
+push constant 1
+call String.new 1
+push constant 36
+call String.appendChar 2
+call Output.printString 1
+pop temp 0
+push local 1
+push constant 1
+add
+pop local 1
+goto WHILE_EXP1
+label WHILE_END1
+push local 0
+push constant 1
+add
+pop local 0
+goto WHILE_EXP0
+label WHILE_END0
+push constant 0
+return

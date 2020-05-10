@@ -1,0 +1,67 @@
+// FILE: Map.jack
+// CS-4100 Optimization Program
+// Standard Jack Version
+// William L. Bahn
+// Spring 2020
+
+// This code is NOT to be changed!
+// This code is intentionally left uncommented.
+
+class Cell
+{
+	field int r, c;
+	field boolean color;
+	field String id;
+	
+	constructor Cell new(int row, int col)
+	{
+		let r = row;
+		let c = col;
+		let color = -((row + col) & 1);
+		let id = String.new(2);
+		
+		do id.appendChar(65 + r);
+		do id.appendChar(48 + c);
+		
+		return this;
+	}
+	
+	method void dispose()
+	{
+		if (~(id = 0))
+		{
+			do id.dispose();
+		}
+		do Memory.deAlloc(this);
+		
+		return;
+	}
+	
+	method void draw(int width, int height, int minRadius)
+	{
+		var int radius;
+		var boolean tempColor;
+		
+		do Screen.setColor(color);
+		do Screen.drawRectangle((width*8)*c, (height*11)*r, ((width*8)*(c + 1)) - 1 , ((height*11)*(r + 1)) - 1);
+
+		let tempColor = ~color;
+		let radius = Math.min(width*8, height*11)/2;
+		while ((radius > minRadius) | (radius = minRadius))
+		{
+			do Screen.setColor(tempColor);
+			do Screen.drawCircle(((width*8)*c) + ((width*8)/2), ((height*11)*r) + ((height*11)/2), radius);
+			let tempColor = ~tempColor;
+			let radius = radius - 3;
+		}
+		do Screen.setColor(~color);
+		
+		do Output.moveCursor(r*height, c*width);
+		do Output.printString(id);
+		
+		do Output.moveCursor(10 + (3*r), 57 + c);
+		do Output.printString("#");
+
+		return;
+	}
+}
